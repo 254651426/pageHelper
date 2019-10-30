@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangjie.dao.UserDao">
+	<resultMap id="mEnrollmentTabResultMap" type="com.yangjie.entity.User">
+		<result property="id" column="id" javaType="int" jdbcType="INTEGER" />
+		<result property="name" column="name" javaType="String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<insert id="insert" parameterType="com.yangjie.entity.User"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into student
+		(
+		id,
+		name
+		)
+		values
+		(
+		#{id},
+		#{name }
+		)
+	</insert>
+
+	<select id="getUser" resultMap="mEnrollmentTabResultMap">
+		select * from student where 1=1
+		<!-- <if test="id!=null"> -->
+		and id=#{id}
+		<!-- </if> -->
+
+	</select>
+
+	<select id="selectByUser" parameterType="com.yangjie.entity.User" resultMap="mEnrollmentTabResultMap">
+		select * from student where 1=1
+		<if test="id!=null">
+			and id=#{id}
+		</if>
+	</select>
+
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true" />
+</mapper>
